@@ -1,0 +1,204 @@
+%% packages
+%% ----------------------------------------------------------------------------
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{xstring}
+\usepackage{import}
+%% references
+\newcommand{\fref}[1]{%
+%###
+Figure~\ref{fig:#1}%
+%###
+}%
+
+\newcommand{\imagepath}{figures}
+
+%% different image types
+%% ----------------------------------------------------------------------------
+% JPG
+% @param: filename, scale, caption
+\newcommand{\imagePDF}[3]{%
+	\imageDraw{#1}{#2}{#3}{pdf}%
+}
+\newcommand{\imagePDFWide}[3]{%
+	\imageWideDraw{#1}{#2}{#3}{pdf}%
+}
+\newcommand{\imagePDFSub}[3]{%
+	\subImageDraw{#1}{#2}{#3}{pdf}%
+}
+
+% JPG
+% @param: filename, scale, caption
+\newcommand{\imageJPG}[4][]{%
+	\imageDraw[#1]{#2}{#3}{#4}{jpg}%
+}
+\newcommand{\imageJPGWide}[4][]{%
+	\imageWideDraw[#1]{#2}{#3}{#4}{jpg}%
+}
+\newcommand{\imageJPGSub}[3]{%
+	\subImageDraw{#1}{#2}{#3}{jpg}%
+}
+
+% BMP
+% @param: filename, scale, caption
+\newcommand{\imageBMP}[4][]{%
+	\imageDraw[#1]{#2}{#3}{#4}{bmp}%
+}
+\newcommand{\imageBMPWide}[4][]{%
+	\imageWideDraw[#1]{#2}{#3}{#4}{bmp}%
+}
+\newcommand{\imageBMPSub}[3]{%
+	\subImageDraw{#1}{#2}{#3}{bmp}%
+}
+
+% SVG
+% @param: filename, scale, caption
+\newcommand{\imageSVG}[3]{%
+	\imageDraw{#1}{#2}{#3}{svg}%
+}
+\newcommand{\imageSVGWide}[3]{%
+	\imageWideDraw{#1}{#2}{#3}{svg}%
+}
+\newcommand{\imageSVGSub}[3]{%
+	\subImageDraw{#1}{#2}{#3}{svg}%
+}
+
+% EPS
+% @param: filename, scale, caption
+\newcommand{\imageEPS}[3]{%
+	\imageDraw{#1}{#2}{#3}{eps}%
+}
+\newcommand{\imageEPSWide}[3]{%
+	\imageWideDraw{#1}{#2}{#3}{eps}%
+}
+\newcommand{\imageEPSSub}[3]{%
+	\subImageDraw{#1}{#2}{#3}{eps}%
+}
+
+% Plots
+% @param: filename, scale, caption
+\newcommand{\imagePlot}[3]{%
+	\plotDraw{#1}{#2}{#3}%
+}
+\newcommand{\imagePlotWide}[3]{%
+	\plotWideDraw{#1}{#2}{#3}%
+}
+\newcommand{\imagePlotSub}[3]{%
+	\subPlotDraw{#1}{#2}{#3}%
+}
+
+%% image drawing
+%% ----------------------------------------------------------------------------
+% images
+% @param filename, scale, caption, filetype
+\newcommand{\imageDraw}[5][]{%
+	\figureDraw[#1]{#2}{#3}{#4}{\imagepath}{#5}%
+}
+\newcommand{\imageWideDraw}[5][]{%
+	\figureWideDraw[#1]{#2}{#3}{#4}{\imagepath}{#5}%
+}
+\newcommand{\subImageDraw}[4]{%
+	\subFigureDraw{#1}{#2}{#3}{\imagepath}{#4}%
+}
+
+% plots
+% @param filename, scale, caption
+\newcommand{\plotDraw}[3]{%
+	\figureDraw{#1}{#2}{#3}{\plotPath}{eps}%
+}
+\newcommand{\plotWideDraw}[3]{%
+	\figureWideDraw{#1}{#2}{#3}{\plotPath}{eps}%
+}
+\newcommand{\subPlotDraw}[3]{%
+	\subFigureDraw{#1}{#2}{#3}{\plotPath}{eps}%
+}
+
+%% general sub figure drawing 
+%% ----------------------------------------------------------------------------
+\newcommand{\subFigureStart} {%
+	\figureWideStart%
+}
+
+% @param filename, scale, caption, filepath, filetype
+\newcommand{\subFigureDraw}[5]{%
+	\subfigure[#3]{%
+		\graphicsDraw{#1}{#2}{#4}{#5}%
+	\label{fig:#1}%
+	}%
+}%
+
+% @param label, caption
+\newcommand{\subFigureEnd}[2]{%
+	\caption{#2}%
+	\label{fig:#1}%
+	\figureWideEnd%
+}%
+
+%% general figure drawing 
+%% ----------------------------------------------------------------------------
+\newcommand{\figureStart}{%
+	\begin{figure}[htp]%
+	\centering%
+}%
+\newcommand{\figureWideStart}{%
+	\begin{figure*}[htp]%
+	\centering%
+}%
+
+% @param filename, scale, caption, filepath, filetype
+\newcommand{\figureDraw}[6][]{%
+	\figureStart%
+		\graphicsDraw{#2}{#3}{#5}{#6}%
+		\ifstrempty{#1}{%
+			\caption{#4}%
+		}{%
+			\caption[#1]{#4}%
+		}%		
+		\label{fig:#2}%
+	\figureEnd%
+}%
+\newcommand{\figureWideDraw}[6][]{%
+	\figureWideStart%
+		\graphicsDraw{#2}{#3}{#5}{#6}%
+		\ifstrempty{#1}{%
+			\caption{#4}%
+		}{%
+			\caption[#1]{#4}%
+		}%
+		\label{fig:#2}%
+	\figureWideEnd%
+}%
+
+\newcommand{\figureEnd}{%
+	\end{figure}%
+}%
+\newcommand{\figureWideEnd}{%
+	\end{figure*}%
+}%
+
+%###
+\newcommand{\graphicsDraw}[4]{%
+	\IfStrEq{#4}{svg}{%
+	\def\svgwidth{#2\linewidth} \includesvg{#1}%
+	}{%
+	\includegraphics[width=#2\linewidth]{#3/#1.#4}%
+	}%
+}%
+
+\newcommand{\executeiffilenewer}[3]{%
+	\ifnum\pdfstrcmp{\pdffilemoddate{#1}}%
+	{\pdffilemoddate{#2}}>0%
+	{\immediate\write18{#3}}\fi%
+}
+\newcommand{\includesvg}[1]{%
+	\executeiffilenewer{/figures/#1.svg}{/figures/#1.pdf}%
+		{inkscape -z -D --file=#1.svg%
+		--export-pdf=#1.pdf --export-latex}%
+		\import{figures/}{#1.pdf_tex}%
+}%
+%###
+
+%% the paths for figures 
+%% ----------------------------------------------------------------------------
+
+\newcommand{\plotPath}{plots}%

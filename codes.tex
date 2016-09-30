@@ -1,0 +1,33 @@
+\usepackage{listings}
+\usepackage{caption}
+
+%% references
+\newcommand{\cref}[1]{%
+%###
+Code~\ref{cd:#1}%
+%###
+}%
+
+\lstset{language=C++,
+	numbers=none,
+	tabsize=2,
+	breaklines=true,
+	basicstyle=\footnotesize\selectfont\normalfont\ttfamily\hyphenchar\font\m@ne\@noligs, 
+	extendedchars=false, 
+	framerule=0pt, 
+	backgroundcolor=\color{gray!25}, 
+	columns=flexible,
+	showstringspaces=false}
+\renewcommand{\lstlistingname}{Code}
+
+\newcommand{\codeInput}[2]{%
+	\lstinputlisting[frame=single, label=cd:#1, caption=#2]{#1.txt}	
+}
+
+\newcommand{\codeStart}[2]{%
+	\begin{lstlisting}[frame=single,label=cd:#1, caption=#2]
+}
+
+\newcommand{\codeEnd}{%
+	\end{lstlisting}
+}

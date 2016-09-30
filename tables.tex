@@ -1,0 +1,28 @@
+%% references
+\newcommand{\tref}[1]{%
+%###
+Table~\ref{tbl:#1}%
+%###
+}%
+
+\newcommand{\tableStart}[1]{%
+	\begin{table}[htp]%
+	\centering%
+	\tabularStart{#1}%
+}
+
+\newcommand{\tableEnd}[2]{%
+	\tabularEnd{#1}%
+	\caption{#2}%
+	\label{tbl:#1}%
+	\end{table}%
+}
+
+\newcommand{\tabularStart}[1]{%
+	\begin{tabular}{#1}%
+}
+
+\newcommand{\tabularEnd}[1]{%
+	\end{tabular}%
+	\label{tbl:#1}%
+}

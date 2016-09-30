@@ -1,0 +1,38 @@
+\ifdefined\classoptions
+\else
+    \def\classoptions{a4paper,12pt,twocolumn}
+\fi
+
+\documentclass[\classoptions]{article}
+%% packages
+\usepackage{amsmath}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{bm}
+\usepackage{siunitx}
+\usepackage{etoolbox}
+
+%% inputs
+\input{../Functions/tables.tex}
+\input{../Functions/codes.tex}
+\input{../Functions/graphics.tex}
+%\input{../Functions/drafting.tex}
+
+\newcommand{\makeheadertitle}[3][\today]{
+	\title{%
+		\Large\textbf{#2}\\ % title
+		\large\textbf{Department of Production and Quality, NTNU} % department
+	}
+	\date{#1}
+	\author{#3}
+	\maketitle
+}
+
+\newcommand{\makeworkingnote}[3][\today]{%
+	\makeheadertitle[#1]{Working Note: #2}{#3}%
+}
+
+\newcommand{\makereport}[3][\today]{%
+	\makeheadertitle[#1]{#2}{#3}%
+}

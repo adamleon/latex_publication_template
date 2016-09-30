@@ -1,0 +1,25 @@
+%% packages 
+%% ----------------------------------------------------------------------------
+\usepackage{todonotes}%
+\usepackage{lipsum}%
+\usepackage[inline, left]{showlabels}
+%% line space 
+%% ----------------------------------------------------------------------------
+%\linespread{2}%
+%% image drawing 
+%% ----------------------------------------------------------------------------
+\ifdefined\graphicsDraw%
+	\renewcommand{\graphicsDraw}[4]{%
+		\IfFileExists{#3/#1.#4}{%
+			\IfStrEq{#4}{svg}{%
+				\def\svgwidth{#2\linewidth} \includesvg{#3/#1}%
+				}{%
+				\includegraphics[width=#2\linewidth]{#3/#1.#4}%
+				}%
+		}{%
+			\def\tempfile{#3/#1.#4}%
+  			\StrSubstitute{\tempfile}{_}{\_}[\tempfile]%
+			\missingfigure{\tempfile ~does not exist}%
+		}%
+	}%
+\fi%
