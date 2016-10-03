@@ -1,0 +1,29 @@
+%% This package contains shorthand functions for handling tables
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{engine/tables}[2016/10/03 Tables Package]
+
+%% Packages
+%% ----------------------------------------------------------------------------
+\RequirePackage{xparse}
+
+%% Table command
+%  Creates a standard table
+%    Column specifier
+%    Label
+%    Caption
+%    Content
+\NewDocumentCommand{\tablecontent}{mmm+m}{
+	\begin{table}[htp]%
+	\centering%
+	\begin{tabular}{#2}%
+	#4
+	\end{tabular}
+	\caption{#3}%
+	\label{\tabletag:#1}%
+	\end{table}%
+}
+
+%% Table tag
+\newcommand{\tabletag}{tbl}
+
+\endinput

@@ -1,0 +1,117 @@
+%% This package contains shorthand functions for handling images and other graphics 
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{engine/graphics}[2016/10/01 Graphics Package]
+
+%% Packages
+%% ----------------------------------------------------------------------------
+\RequirePackage{graphicx}
+\RequirePackage{subfigure}
+\RequirePackage{xstring}
+\RequirePackage{xparse}
+\RequirePackage{import}
+\RequirePackage{todonotes}
+
+%% 'draft' option
+\DeclareOption{draft}{
+	\newcommand{\noimagefilefound}[3]{%
+		\def\imagefile{#2/#1.#3}%
+  		\StrSubstitute{\imagefile}{_}{\_}[\imagefile]%
+		\missingfigure{\imagefile ~does not exist}%
+	}
+}
+
+%% 'publish' option
+\DeclareOption{publish}{
+	\renewcommand{\noimagefilefound}[3]{%
+		\def\imagefile{#2/#1.#3 }%
+  		\StrSubstitute{\imagefile}{_}{\_}[\imagefile]%
+		\PackageError{graphics}{\imagefile does not exist}{Either provide it or set this package to draft.}
+	}
+}
+
+\ExecuteOptions{draft}
+
+\ProcessOptions\relax
+
+%% Graphic command
+%% --------------------------------------------------------------------------------------------------------------------
+%%
+
+%% General figure path
+\newcommand{\figurepath}{fig}
+
+%% General figure tag
+\newcommand{\figuretag}{fig}
+
+%% Image display command
+%  Automatically generates subfigures if inside a figure or figure* environment
+%    Indicates if wide or not
+%    Figure filename and label name
+%    Figure file type. Supports png, jpg, bmp, esp, pdf and svg
+%    Figure size in percentage
+%    Caption
+%    Figure path
+\NewDocumentCommand{\image}{smmmmO{\figurepath}O{\figuretag}}{%
+	% Create subfigure if inside a figure*
+	\IfStrEq{\@currenvir}{figure*}{%
+		\subfigure[#5]{%
+			\@loadimagefile{#2}{#4}{#6}{#3}
+		\label{\figuretag :#2}%
+	}%
+	}{%
+	% Create subfigure if inside a figure
+	\IfStrEq{\@currenvir}{figure}{%
+		\subfigure[#5]{%
+			\@loadimagefile{#2}{#4}{#6}{#3}
+		\label{\figuretag :#2}%
+	}}{%
+	% Create a figure* if marked with star
+	\IfBooleanTF{#1}{%
+		\begin{figure*}[htp]%
+		\centering%
+			\@loadimagefile{#2}{#4}{#6}{#3}
+		\caption{#5}%
+		\label{\figuretag :#2}%
+		\end{figure*}%
+	}{%
+	% Create a figure if not marked with star
+		\begin{figure}[htp]%
+		\centering%
+			\@loadimagefile{#2}{#4}{#6}{#3}
+		\caption{#5}%
+		\label{\figuretag :#2}%
+		\end{figure}%
+	}}}%
+}
+
+%% Image file loader
+%  Loads and displays figure given a filepath
+%    Filename
+%    Figure size in percentage
+%    File path
+%    File type
+\NewDocumentCommand{\@loadimagefile}{mmmm}{
+	\IfFileExists{#3/#1.#4}{%
+		\IfStrEq{#4}{svg}{%
+			\def\svgwidth{#2\linewidth} \includesvg{#1}{#3}%
+			}{%
+				\includegraphics[width=#2\linewidth]{#3/#1.#4}%
+			}%
+		}{%
+			\noimagefilefound{#1}{#3}{#4}
+		}%
+}
+
+%% SVG specific file loader
+\newcommand{\executeiffilenewer}[3]{%
+	\ifnum\pdfstrcmp{\pdffilemoddate{#1}}%
+	{\pdffilemoddate{#2}}>0%
+	{\immediate\write18{#3}}\fi%
+}
+\newcommand{\includesvg}[2]{%
+	\executeiffilenewer{/#2/#1.svg}{/#2/#1.pdf}%
+		{inkscape -z -D --file=#1.svg%
+		--export-pdf=#1.pdf --export-latex}%
+		\import{#2/}{#1.pdf_tex}%
+}
+\endinput

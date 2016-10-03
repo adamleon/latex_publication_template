@@ -1,0 +1,85 @@
+%% This package contains shorthand functions for handling references
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{engine/references}[2016/10/03 References Package]
+
+%% Packages
+%% ----------------------------------------------------------------------------
+\RequirePackage{xstring}
+\RequirePackage{xparse}
+
+%% Universal reference command
+%% --------------------------------------------------------------------------------------------------------------------
+%%
+
+%% This command inputs a comma seperated list of references that will be processed into a reference sentence
+%    reference list
+%    name of reference with a single reference
+%    name of reference with a plural reference
+%    tag of references
+%    reference command
+\NewDocumentCommand\xref{mmmmm}{%
+	\StrCount{#1}{,}[\numofelem]
+	\ifnum\numofelem>0\relax
+    \StrBefore[1]{#1}{,}[\@head]%
+    \StrBehind[\numofelem]{#1}{,}[\@last]%
+    \def\@xreftag{#4}
+    \def\@xrefreference{#5}
+	#3~\@xreflist{#1}
+\else
+	#2~#5{#4:#1}
+\fi
+}
+
+%% Processes list of references
+%    reference list
+\NewDocumentCommand\@xreflist{>{\SplitList{,}}m}{%
+	\ProcessList{#1}{\@processxreflist}
+}
+
+%% Generates sentence from list of references
+%    reference list
+\newcommand\@processxreflist[1]{%
+	\IfStrEq{#1}{\@head}{\@xrefreference{\@xreftag :#1}}{%
+	\IfStrEq{#1}{\@last}{ and~\@xrefreference{\@xreftag :#1}}%
+	{, \@xrefreference{\@xreftag :#1}}}}
+	
+%% Reference commands
+%% --------------------------------------------------------------------------------------------------------------------
+%%
+
+%% Figure references
+\newcommand{\frefnamesingular}{Figure}
+\newcommand{\frefnameplural}{Figures}
+\newcommand{\freftag}{fig}
+\newcommand{\frefreference}[1]{\ref{#1}}
+\newcommand{\fref}[1]{\xref{#1}{\frefnamesingular}{\frefnameplural}{\freftag}{\frefreference}}
+
+%% Table references
+\newcommand{\trefnamesingular}{Table}
+\newcommand{\trefnameplural}{Tables}
+\newcommand{\treftag}{tbl}
+\newcommand{\trefreference}[1]{\ref{#1}}
+\newcommand{\tref}[1]{\xref{#1}{\trefnamesingular}{\trefnameplural}{\treftag}{\trefreference}}
+
+%% Equation references
+\newcommand{\erefnamesingular}{Equation}
+\newcommand{\erefnameplural}{Equations}
+\newcommand{\ereftag}{eq}
+\newcommand{\erefreference}[1]{\ref{#1}}
+\newcommand{\eref}[1]{\xref{#1}{\erefnamesingular}{\erefnameplural}{\ereftag}{\erefreference}}
+
+%% Equation references
+\newcommand{\crefnamesingular}{Code}
+\newcommand{\crefnameplural}{Codes}
+\newcommand{\creftag}{cd}
+\newcommand{\crefreference}[1]{\ref{#1}}
+\newcommand{\cref}[1]{\xref{#1}{\crefnamesingular}{\crefnameplural}{\creftag}{\crefreference}}
+
+%% Section references
+\newcommand{\srefnamesingular}{Section}
+\newcommand{\srefnameplural}{Sections}
+\newcommand{\sreftag}{sec}
+\newcommand{\srefreference}[1]{\ref{#1}}
+\newcommand{\sref}[1]{\xref{#1}{\srefnamesingular}{\srefnameplural}{\sreftag}{\srefreference}}
+
+\endinput

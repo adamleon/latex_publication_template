@@ -1,0 +1,30 @@
+%% This package contains shorthand functions for handling maths
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{engine/maths}[2016/10/03 Math Package]
+
+%% Packages
+%% ----------------------------------------------------------------------------
+\RequirePackage{amsmath}
+\RequirePackage{bm}
+\RequirePackage{siunitx}
+
+%% Common expressions
+\newcommand{\p}[1][]{\ensuremath{\bm{p}#1}}
+\newcommand{\radius}[1][]{\ensuremath{r#1}}
+\newcommand{\dir}[1][]{\ensuremath{\bm{d}#1}}
+
+%% Conformal Geometric Algebra
+\renewcommand{\ni}{\ensuremath{n_\infty}}
+\newcommand{\no}{\ensuremath{n_0}}
+\newcommand{\dual}{\ensuremath{^*}}
+
+\newcommand{\point}[1][]{\ensuremath{\bm{P}#1}}
+\newcommand{\plane}[1][]{\ensuremath{\bm{\Pi}#1}}
+\newcommand{\sphere}[1][]{\ensuremath{\bm{S}#1}}
+\newcommand{\pp}[1][]{\ensuremath{\bm{Q}#1}}
+\newcommand{\lline}[1][]{\ensuremath{\bm{L}#1}}
+\newcommand{\ccircle}[1][]{\ensuremath{\bm{C}#1}}
+
+\newcommand{\trans}[1][]{\ensuremath{\bm{T}#1}}
+\newcommand{\rotor}[1][]{\ensuremath{\bm{R}#1}}
+\newcommand{\motor}[1][]{\ensuremath{\bm{M}#1}}
