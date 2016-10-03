@@ -1,0 +1,41 @@
+\begin{thebibliography}{5}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{\href{http://dx.doi.org/#1}{#1}}
+\providecommand{\doiprefix}{doi:}
+
+\bibitem[{Balchen and Mumm{\'e}(1988)}]{Balchen88}
+Balchen, J.~G. and Mumm{\'e}, K.~I.
+\newblock \emph{Process Control -- Structures and Applications}.
+\newblock van Nostrand Reinhold, 1988.
+
+\bibitem[{Hallingstad(1980)}]{Hallingstad1980}
+Hallingstad, O.
+\newblock Estimation of synchronous machine parameters.
+\newblock \emph{Modeling, Identification and Control}, 1980.
+\newblock 1(1):1--15.
+\newblock \doiprefix\doi{10.4173/mic.1980.1.1}.
+
+\bibitem[{Hovd and Braatz(2004)}]{Hovd04}
+Hovd, M. and Braatz, R.~D.
+\newblock Handling state and output constraints in {MPC} using time-dependent
+  weights.
+\newblock \emph{Modeling, Identification and Control}, 2004.
+\newblock 25(2):67--84.
+
+\bibitem[{Hovd and Skogestad(1992)}]{Hovd92}
+Hovd, M. and Skogestad, S.
+\newblock Robust control of systems consisting of symmetrically interconnected
+  systems.
+\newblock In \emph{Proc. American Control Conference}. Chicago, Illinois, USA,
+  pages 3021--3025, 1992.
+
+\bibitem[{Hovd and Skogestad(2000)}]{Hovd00}
+Hovd, M. and Skogestad, S.
+\newblock Techniques in the control of interconnected plants.
+\newblock In C.~T. Leondes, editor, \emph{Mechatronic Systems Techniques and
+  Applications. Vol. 5: Diagnostic, Reliability and Control Systems
+  Techniques}, pages 139--200. Gordon and Breach Science Publishers, 2000.
+
+\end{thebibliography}

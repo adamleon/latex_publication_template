@@ -1,0 +1,24 @@
+\documentclass{../../Engine/Publishers/MIC/micart}
+\usepackage{lipsum}
+\usepackage{array,booktabs} % For nice tables
+\usepackage{amsmath,amssymb} % For nice maths
+\usepackage{stfloats} % For putting double column floats on bottom of page
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{flushend}
+\definecolor{darkgreen}{rgb}{0,0.75,0}
+
+\newcounter{tempeqncnt} % Counter for temporarily saving equation number
+
+\firstpage{1}    % Set page number for first page
+\MICvolume{31}   % Volume number
+\MICissue{1}     % Issue number
+\MICyear{2010}   % Year
+\MICdoi{mic.2010.1.1}   % Year, issue, paper number in issue
+\shorttitle{Kleppe et.al., ``Insert title here''}
+
+\newcommand{\generatetitle}[2][\today]{
+	\title{#2}
+}
+
+
